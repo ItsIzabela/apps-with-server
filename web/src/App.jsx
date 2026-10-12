@@ -6,7 +6,7 @@ function App() {
 
   const fetchData = async () => {
     const response = await axios.get("http://localhost:3000");
-    setData(response.data.blogPosts);
+    setData(response.data.groupChat);
   };
 
   useEffect(() => {
@@ -14,18 +14,30 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gray-950 flex items-center justify-center flex-col gap-10">
-      <h1 className="text-5xl font-bold text-gray-100">
-        Backend with Express and <span className="text-green-400"> Node</span>
-      </h1>
-      <ul className="rounded-2xl shadow-lg p-5 bg-white space-y-3">
+    <div id="center">
+      <h2>Chat</h2>
+      <div id="forms">
+        <form action="" method="post">
+          <label htmlFor="first">Message:</label>
+          <input type="text" name="firstPerson" id="firstPerson" />
+          <input type="button" value="send" />
+          <br />
+          <br />
+          <label htmlFor="first">Respose:</label>
+          <input type="text" name="secondPerson" id="secondPerson" />
+          <input type="button" value="send" />
+        </form>
+      </div>
+      <div id="result"> 
+        <ul>
         {data.map((post, index) => (
-          <li key={index} className="bg-sky-100 p-4 rounded-2xl hover:scale-105 transition-transform">
-            <p className="text-xl font-semibold text-gray-800">{post.title}</p>
-            <p className="text-sm text-gray-600">{post.content}</p>
+          <li key={index}>
+            <p>{post.name}</p>
+            <p >{post.message}</p>
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 }

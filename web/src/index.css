@@ -4,5 +4,27 @@
 }
 
 #center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+#forms {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#result {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+#chatFirstPerson {
+  justify-content: left;
+}
+
+#chatSecondPerson {
+  justify-content: right;
 }

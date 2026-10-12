@@ -11,14 +11,14 @@ app.use(cors(CORS_OPTIONS));
 
 app.get("/", (req, res) => {
   res.json({
-    blogPosts: [
+    groupChat: [
       {
-        title: "Neymar's Return to Santos and Its Impact on Grêmio",
-        content: "Grêmio will face tougher competition now that Neymar is back at Santos."
+        name: "x",
+        message: "hello."
       },
       {
-        title: "The Importance of Digital Marketing for Your Business",
-        content: "Digital marketing is a powerful tool to boost your business growth."
+        name: "y",
+        message: "bye."
       }
     ]
   });
