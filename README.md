@@ -11,8 +11,6 @@ open react with
 cd frontend
 npm run dev
 ```
-open python backend with
-
 # Python app
 start the server
 ```bash
