@@ -14,9 +14,10 @@ npm run dev
 open python backend with
 
 # Python app
-
+start the server
 ```bash
 cd python_backend
+python manage.py runserver
 ```
 get ready w changes
 ```bash
