@@ -1,7 +1,12 @@
 package com.example.mobile
 
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
@@ -10,46 +15,86 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
-    // Adres Django dla emulatora Androida.
-    private val apiUrl = "http://127.0.0.1:8000/api/health/"
+    private val apiUrl = "http://127.0.0.1:8000/api/player/"
+    private lateinit var headerText: TextView
+    private lateinit var playersContainer: LinearLayout
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var isPolling = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val statusText = findViewById<TextView>(R.id.statusText)
-        val checkServerButton =
-            findViewById<Button>(R.id.checkServerButton)
+        headerText = findViewById(R.id.headerText)
+        playersContainer = findViewById(R.id.playersContainer)
 
-        checkServerButton.setOnClickListener {
-            statusText.text = "Łączenie z serwerem..."
+        startPolling()
+    }
 
-            Thread {
+    private fun startPolling() {
+        Thread {
+            while (isPolling) {
                 try {
-                    // Używamy zdefiniowanej wcześniej zmiennej apiUrl
-                    val url = java.net.URL(apiUrl)
-                    val connection = url.openConnection() as java.net.HttpURLConnection
-
+                    val url = URL(apiUrl)
+                    val connection = url.openConnection() as HttpURLConnection
                     connection.requestMethod = "GET"
-                    connection.connectTimeout = 5000
-                    connection.readTimeout = 5000
+                    connection.connectTimeout = 3000
+                    connection.readTimeout = 3000
 
-                    val code = connection.responseCode
-                    val body = connection.inputStream.bufferedReader().use { it.readText() }
+                    if (connection.responseCode == 200) {
+                        val body = connection.inputStream.bufferedReader().use { it.readText() }
+                        val json = JSONObject(body)
 
-                    runOnUiThread {
-                        statusText.text = "HTTP $code\n$body"
+                        val count = json.getInt("count")
+                        val maxPlayers = json.getInt("max_players")
+                        val playersArray = json.getJSONArray("players")
+
+                        runOnUiThread {
+                            headerText.text = "Lobby Graczy ($count/$maxPlayers)"
+                            playersContainer.removeAllViews() // Czyścimy przed narysowaniem od nowa
+
+                            for (i in 0 until playersArray.length()) {
+                                val player = playersArray.getJSONObject(i)
+                                val name = player.getString("name")
+                                val colorHex = player.getString("color")
+
+                                val playerCard = LinearLayout(this).apply {
+                                    orientation = LinearLayout.VERTICAL
+                                    gravity = Gravity.CENTER
+                                    setPadding(16, 16, 16, 16)
+                                }
+
+                                val nameTv = TextView(this).apply {
+                                    text = name
+                                    gravity = Gravity.CENTER
+                                }
+
+                                val square = View(this).apply {
+                                    layoutParams = LinearLayout.LayoutParams(100, 100).apply {
+                                        topMargin = 10
+                                    }
+                                    setBackgroundColor(Color.parseColor(colorHex))
+                                }
+
+                                playerCard.addView(nameTv)
+                                playerCard.addView(square)
+                                playersContainer.addView(playerCard)
+                            }
+                        }
                     }
-
                     connection.disconnect()
                 } catch (e: Exception) {
-                    android.util.Log.e("API_TEST", "Błąd połączenia z Django", e)
-
-                    runOnUiThread {
-                        statusText.text = "${e.javaClass.simpleName}: ${e.message}"
-                    }
+                    e.printStackTrace()
                 }
-            }.start()
-        }
+
+                Thread.sleep(1000)
+            }
+        }.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isPolling = false
     }
 }

@@ -1,14 +1,22 @@
-# backend
+# 🚀 Uruchamianie Systemu Multiplatformowego
 
-## server must be on first!
+Projekt składa się z serwera backendowego Django, aplikacji webowej React, aplikacji Desktopowej (Python) oraz aplikacji mobilnej Android.
 
-open server by doing in ur project folder
+# 1. Backend (Django) ⚠️ SERWER MUSI BYĆ URUCHOMIONY JAKO PIERWSZY!
+
+Otwórz terminal w głównym katalogu projektu i uruchom serwer:
+
 ```bash
 cd backend
 python manage.py runserver 0.0.0.0:8000
 ```
 
-# run web app
+
+Serwer będzie dostępny pod adresem: ```http://127.0.0.1:8000/```
+
+# 2. Aplikacja Webowa (React)
+
+Otwórz nowy terminal w głównym katalogu projektu:
 
 ```bash
 cd web
@@ -16,25 +24,35 @@ npm install
 npm run dev
 ```
 
-# run desktop app
+# 3. Aplikacja Desktopowa (Python Tkinter)
+
+Otwórz nowy terminal w głównym katalogu projektu:
 
 ```bash
 cd desktop
 python main.py
 ```
 
-lub f5 lub run  -> start debbuging
 
-# run mobile app
-open folder mobile on android studio and click run
+Alternatywnie w VS Code / PyCharm: naciśnij F5 lub wybierz Run ➔ Start Debugging.
 
-if server does not connect and shows socket timeout exception
-open terminal and write:
+# 4. Aplikacja Mobilna (Android Studio)
+
+Otwórz folder mobile w Android Studio.
+
+Poczekaj na synchronizację projektu Gradle.
+
+Wybierz emulator lub podłączony telefon i kliknij Run.
+
+🛠️ Rozwiązywanie problemów z siecią w Androidzie
+
+Błąd: ```SocketTimeoutException``` / Brak połączenia z Django
+
+Jeśli aplikacja mobilna nie może połączyć się z serwerem lokalnym, otwórz terminal (np. w Android Studio) i wykonaj komendę przekierowania portu przez ADB:
 
 ```bash
 adb reverse tcp:8000 tcp:8000
 ```
 
 
-
-## server must be on first!
+Uwaga: Upewnij się, że w kodzie Androida adres URL wskazuje na http://127.0.0.1:8000/api/ po użyciu komendy adb reverse.

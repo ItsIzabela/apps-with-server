@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import health_check
+from .views import player_lobby
 
 urlpatterns = [
-    path("health/", health_check, name="health_check"),
+    path('player/', player_lobby, name='player_lobby'),
 ]

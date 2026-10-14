@@ -1,29 +1,24 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="20dp">
 
     <TextView
+        android:id="@+id/headerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Moja aplikacja mobilna"
-        android:textSize="24sp"
-        android:layout_marginBottom="24dp" />
+        android:text="Lobby Graczy (0/5)"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp" />
 
-    <Button
-        android:id="@+id/checkServerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Polacz z serwerem" />
-
-    <TextView
-        android:id="@+id/statusText"
+    <LinearLayout
+        android:id="@+id/playersContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Oczekiwanie na polaczenie..."
-        android:layout_marginTop="20dp" />
+        android:gravity="center"
+        android:orientation="vertical" />
 
 </LinearLayout>
