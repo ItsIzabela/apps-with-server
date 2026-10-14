@@ -1,38 +1,40 @@
-# Web + mobile app
+# backend
 
-open server with 
-```backend mobile + web
-cd mobile-backend lub cd web-backend
-node server.js
+## server must be on first!
+
+open server by doing in ur project folder
+```bash
+cd backend
+python manage.py runserver 0.0.0.0:8000
 ```
 
-open react with 
+# run web app
+
 ```bash
-cd frontend
+cd web
+npm install
 npm run dev
 ```
-# Python app
-start the server
+
+# run desktop app
+
 ```bash
-cd python_backend
-python manage.py runserver
-```
-get ready w changes
-```bash
-python manage.py makemigrations api
-```
-accept changes
-```bash
-python manage.py migrate
+cd desktop
+python main.py
 ```
 
-log in to django
-```
-http://127.0.0.1:8000/admin/
-```
+lub f5 lub run  -> start debbuging
+
+# run mobile app
+open folder mobile on android studio and click run
+
+if server does not connect and shows socket timeout exception
+open terminal and write:
+
 ```bash
-username: 5d
-password: xyz
+adb reverse tcp:8000 tcp:8000
 ```
 
 
+
+## server must be on first!
